@@ -6,43 +6,29 @@ This image allows you to quickly run [lighthouse](https://github.com/GoogleChrom
 
 ## Installation
 
-### From Github
-
-Github URL: <https://github.com/MatthiasWinkelmann/lighthouse-chromium-alpine-docker>
+Github URL: <https://github.com/invia-de/lighthouse-chromium-alpine-docker>
 
 ```shell
-    git clone git@github.com:MatthiasWinkelmann/lighthouse-chromium-alpine-docker.git
+    git clone git@github.com:invia-de/lighthouse-chromium-alpine-docker.git
     docker build -t lighthouse lighthouse-chromium-alpine-docker
 ```
 
-### From Docker Hub
+## GIT Credentials
 
-Docker Hub URL: <https://hub.docker.com/r/matthiaswinkelmann/lighthouse-chromium-alpine/>
+You need to create a .git-credentials file to make sure gists is working. The file needs to look like this:
 
-```shell
-docker pull matthiaswinkelmann/lighthouse-chromium-alpine
+```
+https://username:token@github.com
 ```
 
 ## Usage
 
 Processes within the container cannot easily access the host's file system. You can either print to STDOUT and redirect to a file, or mount a local folder in the container, as shown here:
 
-### Quickstart: Print to STDOUT
+### Quickstart:
 
 ```shell
-docker run lighthouse --output-path=stdout https://google.com
-```
-
-### Saving to file
-
-```shell
-docker run -v ./output/:/lighthouse/output/ lighthouse --output-path=/lighthouse/output/results.html --save-assets --save-artifacts https://google.com
-```
-
-## Testing
-
-```shell
-docker run lighthouse test
+docker run --mount type=bind,source=$(pwd)/output,destination=/home/lighthouse/output -it --privileged lighthouse https://google.com
 ```
 
 ## Links
