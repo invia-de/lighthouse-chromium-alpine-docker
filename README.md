@@ -15,10 +15,10 @@ Github URL: <https://github.com/invia-de/lighthouse-chromium-alpine-docker>
 
 ## Github Credentials
 
-You need to create a .git-credentials file to make sure gists is working. The file needs to look like this:
+You need to create a .git-credentials file to make sure gists is working. The file needs to have your Github Token with _repo_, _read:org_ and _gists_ permission:
 
 ```
-https://username:token@github.com
+a1b2c3d4e5f6g7h8i9j0
 ```
 
 ## Usage

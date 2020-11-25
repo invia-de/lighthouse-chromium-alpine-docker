@@ -44,6 +44,14 @@ RUN apk -U --no-cache add \
 # Install lighthouse
 RUN npm --global install yarn && yarn global add lighthouse
 
+# Install/Compile Github CLI (needed for github Gists)
+RUN apk -U --no-cache add go git make
+RUN git clone https://github.com/cli/cli.git gh-cli
+RUN cd gh-cli \
+    && make \
+    && mv ./bin/gh /usr/local/bin
+RUN apk del go git make
+
 # Delete Caches
 RUN rm -rf /var/lib/apt/lists/* \
     /var/cache/apk/* \
@@ -59,8 +67,6 @@ RUN addgroup lighthouse && adduser -S -g lighthouse lighthouse \
     && mkdir -p /home/lighthouse && mkdir /home/lighthouse/output && chown -R lighthouse:lighthouse /home/lighthouse \
 		&& mkdir -p /opt/google/lighthouse && chown -R lighthouse:lighthouse /opt/google/lighthouse
 
-# Install Python Requirements (needed for github Gists)
-RUN pip2 install --no-cache-dir gists.cli
 
 # Add Output Volume
 VOLUME /home/lighthouse/output
