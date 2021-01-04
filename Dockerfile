@@ -38,19 +38,11 @@ RUN apk -U --no-cache add \
     dbus \
     ttf-freefont \
     mesa-dri-swrast \
-    py2-pip \
+    py-pip \
     npm
 
 # Install lighthouse
 RUN npm --global install yarn && yarn global add lighthouse
-
-# Install/Compile Github CLI (needed for github Gists)
-RUN apk -U --no-cache add go git make
-RUN git clone https://github.com/cli/cli.git gh-cli
-RUN cd gh-cli \
-    && make \
-    && mv ./bin/gh /usr/local/bin
-RUN apk del go git make
 
 # Delete Caches
 RUN rm -rf /var/lib/apt/lists/* \
@@ -79,6 +71,5 @@ WORKDIR /home/lighthouse
 
 # Copy needed files
 COPY lighthouse-chromium.sh ./
-COPY .git-credentials ./
 
 ENTRYPOINT ["./lighthouse-chromium.sh"]
